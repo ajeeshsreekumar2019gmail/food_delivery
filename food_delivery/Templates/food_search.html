@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Food {% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- Header Section -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">🍱 Find Your Favorite Food</h2>
+    <p class="text-muted mb-0">Discover meals from top restaurants around you</p>
+  </div>
+
+  <!-- Search Form -->
+  <form method="get" class="card shadow-sm border-0 mb-5 p-3 p-md-4 rounded-4 bg-light">
+    <div class="row g-3">
+      <div class="col-12 col-md-4">
+        <label class="form-label fw-semibold small">Food Name</label>
+        <input type="text" name="query" class="form-control" placeholder="e.g. Pizza, Burger" value="{{ query }}">
+      </div>
+
+      <div class="col-12 col-md-4">
+        <label class="form-label fw-semibold small">Restaurant</label>
+        <input type="text" name="restaurant" class="form-control" placeholder="Restaurant name" value="{{ restaurant }}">
+      </div>
+
+      <div class="col-6 col-md-2">
+        <label class="form-label fw-semibold small">Max Price (₹)</label>
+        <input type="number" name="max_price" class="form-control" placeholder="e.g. 300" value="{{ max_price }}">
+      </div>
+
+      <div class="col-6 col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Results Section -->
+  {% if food_items %}
+  <div class="row">
+    {% for item in food_items %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
+      <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height:160px; object-fit:cover;">
+        {% else %}
+        <img src="{% static 'images/default-food.png' %}" class="card-img-top" alt="Food" style="height:160px; object-fit:cover;">
+        {% endif %}
+        <div class="card-body p-3">
+          <h6 class="card-title fw-semibold mb-1 text-truncate">{{ item.name }}</h6>
+          <p class="text-muted small mb-1 text-truncate">
+            <i class="bi bi-shop"></i> {{ item.restaurant.name }}
+          </p>
+          <p class="fw-bold text-success mb-2">₹{{ item.price }}</p>
+          <a href="{% url 'add_to_cart' item.id %}" class="btn btn-outline-success btn-sm w-100 rounded-pill">
+            <i class="bi bi-cart-plus"></i> Add
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center shadow-sm mt-4">
+    <i class="bi bi-info-circle"></i> No food items found. Try a different search.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Restaurant Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">🏪 Restaurant Dashboard</h1>
+            <p class="text-muted mb-0">Welcome back, {{ user.username }}</p>
+        </div>
+        
+        <!-- Quick Actions Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                 ⚡ Quick Menu
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'manage_menu' %}">📦 Manage Menu</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_food_item' %}">➕ Add Food Item</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_category' %}">📂 Add Category</a></li>
+                <li><a class="dropdown-item" href="{% url 'restaurant_orders' %}">📋 View Orders</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'restaurant_profile' %}">⚙️ Update Profile</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-primary">
+                <div class="card-body text-center">
+                    <h4 class="text-primary">{{ total_orders }}</h4>
+                    <small class="text-muted">Total Orders</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-warning">
+                <div class="card-body text-center">
+                    <h4 class="text-warning">{{ pending_orders }}</h4>
+                    <small class="text-muted">Pending Orders</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <h4 class="text-success">{{ total_food_items }}</h4>
+                    <small class="text-muted">Menu Items</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-info">
+                <div class="card-body text-center">
+                    <h4 class="text-info">
+                        {% if restaurant_profile.is_verified %}✅{% else %}⏳{% endif %}
+                    </h4>
+                    <small class="text-muted">
+                        {% if restaurant_profile.is_verified %}Verified{% else %}Pending{% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Cards -->
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📦 Menu Management</h5>
+                    <p class="card-text text-muted">Manage your food items and categories</p>
+                    <a href="{% url 'manage_menu' %}" class="btn btn-outline-primary btn-sm">Manage Menu</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📋 Orders</h5>
+                    <p class="card-text text-muted">View and manage customer orders</p>
+                    <a href="{% url 'restaurant_orders' %}" class="btn btn-outline-success btn-sm">View Orders</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">⚙️ Profile</h5>
+                    <p class="card-text text-muted">Update restaurant information</p>
+                    <a href="{% url 'restaurant_profile' %}" class="btn btn-outline-info btn-sm">Update Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

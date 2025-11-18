@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}View Customer - {{ customer.username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Customer Info Card -->
+    <div class="card shadow-lg border-0 mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">👤 Customer Details</h4>
+            <a href="{% url 'manage_customers' %}" class="btn btn-light btn-sm">← Back</a>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Username:</strong> {{ customer.username }}</p>
+                    <p><strong>Email:</strong> {{ customer.email }}</p>
+                   <p><strong>Phone:</strong> {{ customer.phone_number }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Date Joined:</strong> {{ customer.date_joined|date:"M d, Y" }}</p>
+                    <p><strong>Last Login:</strong> {{ customer.last_login|date:"M d, Y H:i" }}</p>
+                    <p><strong>Status:</strong>
+                        {% if customer.is_active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Orders Card -->
+    <div class="card shadow border-0">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">🧾 Past Orders</h5>
+        </div>
+        <div class="card-body">
+            {% if orders %}
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Restaurant</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>#{{ order.id }}</td>
+                                    <td>{{ order.restaurant.name }}</td>
+                                    <td>₹{{ order.total_amount }}</td>
+                                    <td>
+                                        {% if order.status == 'pending' %}
+                                            <span class="badge bg-secondary">Pending</span>
+                                        {% elif order.status == 'assigned' %}
+                                            <span class="badge bg-info text-dark">Assigned</span>
+                                        {% elif order.status == 'delivering' %}
+                                            <span class="badge bg-primary">Out for Delivery</span>
+                                        {% elif order.status == 'delivered' %}
+                                            <span class="badge bg-success">Delivered</span>
+                                        {% elif order.status == 'cancelled' %}
+                                            <span class="badge bg-danger">Cancelled</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ order.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted text-center mb-0">No past orders found for this customer.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

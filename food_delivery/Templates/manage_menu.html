@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Manage Menu{{ restaurant.restaurant_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">🏪 {{ restaurant.restaurant_name }} - Manage Menu</h2>
+            <p class="text-muted mb-0">Manage your food items and categories</p>
+        </div>
+        <div>
+            <a href="{% url 'add_food_item' %}" class="btn btn-success me-2">
+                ➕ Add New Item
+            </a>
+            <a href="{% url 'add_category' %}" class="btn btn-outline-primary">
+                📂 Add Category
+            </a>
+        </div>
+    </div>
+
+    <!-- Menu Items Table -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">🍽️ Menu Items ({{ food_items.count }})</h5>
+        </div>
+        <div class="card-body">
+            {% if food_items %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price (₹)</th>
+                                <th>Prep Time</th>
+                                <th>Available</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in food_items %}
+                                <tr>
+                                    <td>
+                                        
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" 
+                                                 alt="{{ item.name }}" 
+                                                 class="rounded" 
+                                                 style="width: 60px; height: 60px; object-fit: cover;">
+                                        {% else %}
+                                            <div class="rounded bg-light d-flex align-items-center justify-content-center" 
+                                                 style="width: 60px; height: 60px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <strong>{{ item.name }}</strong>
+                                        {% if item.description %}
+                                            <br>
+                                            <small class="text-muted">{{ item.description|truncatewords:5 }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.category %}
+                                            <span class="badge bg-info">{{ item.category.name }}</span>
+                                        {% else %}
+                                            <span class="text-muted">No category</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <strong class="text-success">₹{{ item.price }}</strong>
+                                    </td>
+                                    <td>
+                                        <small>{{ item.preparation_time }} min</small>
+                                    </td>
+                                    <td>
+                                        {% if item.is_available %}
+                                            <span class="badge bg-success">Available</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Unavailable</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{% url 'edit_food_item' item.id %}" 
+                                               class="btn btn-outline-primary">
+                                                ✏️ Edit
+                                            </a>
+                                            <a href="{% url 'delete_food_item' item.id %}" 
+                                               class="btn btn-outline-danger"
+                                               onclick="return confirm('Are you sure you want to delete {{ item.name }}?')">
+                                                🗑️ Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No food items found</h5>
+                    <p class="text-muted">Add your first food item to get started!</p>
+                    <a href="{% url 'add_food_item' %}" class="btn btn-success">
+                        ➕ Add Your First Food Item
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">📂 Categories ({{ categories.count }})</h5>
+        </div>
+        <div class="card-body">
+            {% if categories %}
+                <div class="row">
+                    {% for category in categories %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-1">{{ category.name }}</h6>
+                                    <small class="text-muted">
+                                        {{ category.fooditem_set.count }} item{{ category.fooditem_set.count|pluralize }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-folder-open fa-2x text-muted mb-2"></i>
+                    <p class="text-muted mb-0">No categories created yet.</p>
+                    <a href="{% url 'add_category' %}" class="btn btn-outline-warning btn-sm mt-2">
+                        ➕ Create First Category
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+/* ===========================
+   MENU PAGE
+=========================== */
+body {
+    background: #fafbfc;
+    font-family: 'Poppins', sans-serif;
+}
+
+.menu-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.menu-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.menu-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.menu-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #198754;
+}
+
+.add-btn {
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+}

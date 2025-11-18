@@ -1,0 +1,396 @@
+/* Delivery Partner Details Styles */
+.delivery-partner-container {
+    margin-top: 2rem;
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Section */
+.partner-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.partner-header h2 {
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 2.2rem;
+}
+
+.partner-header .text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Cards */
+.partner-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.partner-card:hover {
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.partner-card .card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem 2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+}
+
+.partner-card .card-body {
+    padding: 2rem;
+}
+
+/* Action Cards */
+.action-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.action-card:hover {
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.action-card .card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+}
+
+.action-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Info Items */
+.info-item {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #f0f2f5;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.info-item:hover {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-radius: 12px;
+    padding: 1.2rem 1rem;
+    transform: translateX(8px);
+}
+
+.info-item:hover::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    border-radius: 2px;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item i {
+    width: 24px;
+    text-align: center;
+    opacity: 0.9;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover i {
+    transform: scale(1.1);
+    color: #0d6efd;
+}
+
+.info-item small {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item p {
+    margin-bottom: 0;
+    color: #2c3e50;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+/* Section Headers */
+.section-header {
+    color: #2c3e50 !important;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #e9ecef;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    border-radius: 2px;
+}
+
+.section-header i {
+    opacity: 0.9;
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Badges */
+.badge.rounded-pill {
+    padding: 0.6em 1.3em;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.bg-light {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    color: #2c3e50 !important;
+    border: 1px solid #e9ecef;
+}
+
+/* Address Card */
+.address-card {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border: 2px dashed #d0d7ff;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.address-card:hover {
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(13, 110, 253, 0.1);
+}
+
+.address-card .card-body {
+    padding: 1.5rem;
+}
+
+.address-card p {
+    color: #495057;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    font-size: 0.95rem;
+}
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+    background: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    border-color: #6c757d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #146c43 0%, #0f5132 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+}
+
+/* Quick Action Button */
+.quick-action-btn {
+    text-align: center;
+    padding: 1.25rem;
+    border: 2px solid #0d6efd;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+    background: transparent;
+    color: #0d6efd;
+}
+
+.quick-action-btn:hover {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.3);
+    text-decoration: none;
+}
+
+.quick-action-btn i {
+    transition: all 0.3s ease;
+}
+
+.quick-action-btn:hover i {
+    transform: scale(1.2);
+}
+
+/* Verification Status */
+.verification-icon {
+    margin-bottom: 1.2rem;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.verification-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Status Colors with Gradients */
+.bg-success {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%) !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .delivery-partner-container {
+        margin-top: 1rem;
+    }
+    
+    .partner-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .action-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    .info-item {
+        padding: 1rem 0;
+    }
+    
+    .info-item:hover {
+        padding: 1rem 0.75rem;
+        transform: translateX(5px);
+    }
+    
+    .partner-header h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .partner-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .partner-card .card-header,
+    .action-card .card-header {
+        padding: 1.25rem 1rem;
+    }
+    
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .section-header {
+        font-size: 1.1rem;
+    }
+}
+
+/* Animation for cards */
+.partner-card {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.action-card {
+    animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Text colors */
+.text-success {
+    color: #198754 !important;
+    font-weight: 600;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Ensure proper spacing */
+.d-grid {
+    gap: 0;
+}

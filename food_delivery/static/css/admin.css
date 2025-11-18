@@ -1,0 +1,37 @@
+/* ===========================
+   ADMIN HOME DASHBOARD
+=========================== */
+body {
+    background: #f1f3f5;
+    font-family: 'Poppins', sans-serif;
+}
+
+.admin-header {
+    background: #343a40;
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.dashboard-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: 0.2s;
+}
+
+.dashboard-box:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-box h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.dashboard-box p {
+    font-size: 16px;
+}

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Partner Details - {{ partner.username }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/delivery_partner_details.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Delivery Partner Details</h2>
+            <p class="text-muted mb-0">Manage and view partner information</p>
+        </div>
+        <a href="{% url 'manage_delivery_partners' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Partners
+        </a>
+    </div>
+
+    <!-- Main Profile Card -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-user-circle me-2"></i>
+                            {{ partner.username }}'s Profile
+                        </h5>
+                        <span class="badge bg-light text-dark">
+                            ID: {{ partner.id }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Personal Information -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h6 class="text-primary mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Personal Information
+                                </h6>
+                                <div class="info-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-user text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Username</small>
+                                            <p class="mb-0 fw-bold">{{ partner.username }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-envelope text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Email Address</small>
+                                            <p class="mb-0">{{ partner.email }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-phone text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Phone Number</small>
+                                            <p class="mb-0">
+                                                {% if partner.phone_number and partner.phone_number != '0000000000' %}
+                                                    {{ partner.phone_number }}
+                                                {% else %}
+                                                    <span class="text-muted">Not provided</span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Information -->
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h6 class="text-primary mb-3">
+                                    <i class="fas fa-cog me-2"></i>Account Information
+                                </h6>
+                                <div class="info-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Joined Date</small>
+                                            <p class="mb-0">{{ partner.date_joined|date:"F d, Y" }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-shield-alt text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Verification Status</small>
+                                            <p class="mb-0">
+                                                {% if partner.is_verified %}
+                                                    <span class="badge bg-success rounded-pill">
+                                                        <i class="fas fa-check-circle me-1"></i>Verified
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-warning text-dark rounded-pill">
+                                                        <i class="fas fa-clock me-1"></i>Pending Verification
+                                                    </span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-user-tag text-muted me-3" style="width: 20px;"></i>
+                                        <div>
+                                            <small class="text-muted">Role</small>
+                                            <p class="mb-0">
+                                                <span class="badge bg-info text-dark rounded-pill">
+                                                    {{ partner.get_role_display }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Section -->
+                    {% if partner.address %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="text-primary mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>Delivery Address
+                            </h6>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="mb-0">{{ partner.address }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Sidebar -->
+        <div class="col-lg-4">
+            <!-- Verification Card -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-{% if partner.is_verified %}success{% else %}warning{% endif %} text-white py-3">
+                    <h6 class="mb-0">
+                        <i class="fas fa-{% if partner.is_verified %}check-circle{% else %}clock{% endif %} me-2"></i>
+                        Verification Status
+                    </h6>
+                </div>
+                <div class="card-body text-center">
+                    {% if partner.is_verified %}
+                        <div class="text-success mb-3">
+                            <i class="fas fa-check-circle fa-3x"></i>
+                        </div>
+                        <p class="text-success mb-3">This partner is verified and active</p>
+                        <button class="btn btn-outline-secondary" disabled>
+                            <i class="fas fa-check me-2"></i>Already Verified
+                        </button>
+                    {% else %}
+                        <div class="text-warning mb-3">
+                            <i class="fas fa-clock fa-3x"></i>
+                        </div>
+                        <p class="text-muted mb-3">This partner is awaiting verification</p>
+                        <a href="{% url 'verify_user' partner.id %}" class="btn btn-success w-100">
+                            <i class="fas fa-user-check me-2"></i>Verify Partner
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Quick Actions Card -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-white py-3">
+                    <h6 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>
+                        Quick Actions
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="mailto:{{ partner.email }}" class="btn btn-outline-primary">
+                            <i class="fas fa-envelope me-2"></i>Send Email
+                        </a>
+                        {% if partner.phone_number and partner.phone_number != '0000000000' %}
+                        <a href="tel:{{ partner.phone_number }}" class="btn btn-outline-success">
+                            <i class="fas fa-phone me-2"></i>Call Partner
+                        </a>
+                        {% endif %}
+                        <button class="btn btn-outline-warning">
+                            <i class="fas fa-edit me-2"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

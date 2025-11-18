@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">🛍️ My Orders</h4>
+        </div>
+        <div class="card-body">
+            {% if orders %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Restaurant</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>#{{ order.id }}</td>
+                                <td>{{ order.restaurant.name }}</td>
+                                <td>₹{{ order.total_amount }}</td>
+                                <td>
+                                    {% if order.status == 'pending' %}
+                                        <span class="badge bg-warning text-dark">{{ order.status|title }}</span>
+                                    {% elif order.status == 'delivered' %}
+                                        <span class="badge bg-success">{{ order.status|title }}</span>
+                                    {% elif order.status == 'cancelled' %}
+                                        <span class="badge bg-danger">{{ order.status|title }}</span>
+                                    {% else %}
+                                        <span class="badge bg-info">{{ order.status|title }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ order.created_at|date:"M d, Y" }}</td>
+                                <td>
+                                    <a href="{% url 'order_confirmation' order.id %}" class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center p-4">
+                    <p class="text-muted mb-2">You haven’t placed any orders yet.</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">Start Ordering 🍔</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

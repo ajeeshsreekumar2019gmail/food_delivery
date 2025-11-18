@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Food - {{ food_item.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <h3 class="text-center mb-4">Edit Food Item</h3>
+
+  <!-- Display Django messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <form method="POST" enctype="multipart/form-data" class="border p-4 rounded bg-light">
+        {% csrf_token %}
+
+        <!-- Debug: Show form errors at top -->
+        {% if form.errors %}
+          <div class="alert alert-warning">
+            <strong>Please correct the following errors:</strong>
+            <ul class="mb-0">
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label for="{{ form.name.id_for_label }}" class="form-label">Name *</label>
+          <input type="text" 
+                 name="{{ form.name.name }}" 
+                 id="{{ form.name.id_for_label }}" 
+                 class="form-control {% if form.name.errors %}is-invalid{% endif %}" 
+                 value="{{ form.name.value|default:'' }}" 
+                 required>
+          {% if form.name.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.name.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+          <textarea name="{{ form.description.name }}" 
+                    id="{{ form.description.id_for_label }}" 
+                    class="form-control {% if form.description.errors %}is-invalid{% endif %}" 
+                    rows="3" 
+                    placeholder="Describe the food item...">{{ form.description.value|default:'' }}</textarea>
+          {% if form.description.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.description.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.price.id_for_label }}" class="form-label">Price *</label>
+          <input type="number" 
+                 name="{{ form.price.name }}" 
+                 id="{{ form.price.id_for_label }}" 
+                 class="form-control {% if form.price.errors %}is-invalid{% endif %}" 
+                 value="{{ form.price.value|default:'' }}" 
+                 step="0.01" 
+                 min="0" 
+                 required>
+          {% if form.price.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.price.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.category.id_for_label }}" class="form-label">Category *</label>
+          <select name="{{ form.category.name }}" 
+                  id="{{ form.category.id_for_label }}" 
+                  class="form-select {% if form.category.errors %}is-invalid{% endif %}" 
+                  required>
+            <option value="">Select a category</option>
+            {% for category in form.category.field.queryset %}
+              <option value="{{ category.id }}" {% if form.category.value == category.id %}selected{% endif %}>
+                {{ category.name }}
+              </option>
+            {% endfor %}
+          </select>
+          {% if form.category.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.category.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.preparation_time.id_for_label }}" class="form-label">Preparation Time (minutes) *</label>
+          <input type="number" 
+                 name="{{ form.preparation_time.name }}" 
+                 id="{{ form.preparation_time.id_for_label }}" 
+                 class="form-control {% if form.preparation_time.errors %}is-invalid{% endif %}" 
+                 value="{{ form.preparation_time.value|default:'' }}" 
+                 min="1" 
+                 max="120" 
+                 required>
+          {% if form.preparation_time.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.preparation_time.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+          <input type="checkbox" 
+                 name="{{ form.is_available.name }}" 
+                 id="{{ form.is_available.id_for_label }}" 
+                 class="form-check-input" 
+                 {% if form.is_available.value %}checked{% endif %}>
+          <label for="{{ form.is_available.id_for_label }}" class="form-check-label">Available for ordering</label>
+        </div>
+
+        <div class="mb-3">
+          <label for="{{ form.image.id_for_label }}" class="form-label">Image</label><br>
+          {% if food_item.image %}
+            <div class="mb-2">
+              <img src="{{ food_item.image.url }}" class="img-thumbnail" style="height:120px; width:120px; object-fit:cover;">
+              <div class="form-text">Current image</div>
+            </div>
+          {% endif %}
+          <input type="file" 
+                 name="{{ form.image.name }}" 
+                 id="{{ form.image.id_for_label }}" 
+                 class="form-control {% if form.image.errors %}is-invalid{% endif %}" 
+                 accept="image/*">
+          {% if form.image.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.image.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class="form-text">Leave empty to keep current image</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">Save Changes</button>
+        <a href="{% url 'manage_menu' %}" class="btn btn-outline-secondary w-100">Cancel</a>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

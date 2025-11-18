@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Manage Restaurants{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0">🏪 Manage Restaurants</h3>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Restaurant Accounts</h5>
+        </div>
+
+        <div class="card-body">
+            {% if restaurants %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Date Joined</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for restaurant in restaurants %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ restaurant.username }}</td>
+                            <td>{{ restaurant.email }}</td>
+                            <td>{{ restaurant.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                {% if restaurant.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'view_restaurant' restaurant.id %}" class="btn btn-sm btn-outline-primary">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center mb-0">
+                No restaurants found.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

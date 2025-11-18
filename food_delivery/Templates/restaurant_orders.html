@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Restaurant Orders{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">📦 Restaurant Orders</h3>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-sm">← Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Incoming Orders</h5>
+        </div>
+
+        <div class="card-body">
+            {% if orders %}
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Customer</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ order.customer.username }}</td>
+                            <td>₹{{ order.total_amount }}</td>
+                            <td>
+                                {% if order.status == "pending" %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif order.status == "accepted" %}
+                                    <span class="badge bg-info">Accepted</span>
+                                {% elif order.status == "preparing" %}
+                                    <span class="badge bg-primary">Preparing</span>
+                                {% elif order.status == "delivering" %}
+                                    <span class="badge bg-secondary">Delivering</span>
+                                {% elif order.status == "delivered" %}
+                                    <span class="badge bg-success">Delivered</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ order.status }}</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ order.created_at|date:"M d, Y - h:i A" }}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center mb-0">
+                No orders available.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

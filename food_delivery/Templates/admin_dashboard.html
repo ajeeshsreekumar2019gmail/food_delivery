@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/admin.css' %}" rel="stylesheet">
+<div class="dashboard-header">
+    <h1>👑 Admin Dashboard</h1>
+    <p class="lead">Welcome back, {{ user.username }}</p>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+<div class="messages mb-4">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Main Statistics -->
+<div class="dashboard-stats mb-4">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-card-primary">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h5 class="stat-label">Total Customers</h5>
+                <p class="stat-number text-primary">{{ customers }}</p>
+                <a href="{% url 'manage_customers' %}" class="btn btn-outline-primary btn-sm">Manage Customers</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-success">
+                <div class="stat-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h5 class="stat-label">Total Restaurants</h5>
+                <p class="stat-number text-success">{{ restaurants }}</p>
+                <a href="{% url 'manage_restaurants' %}" class="btn btn-outline-success btn-sm">Manage Restaurants</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-warning">
+                <div class="stat-icon">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <h5 class="stat-label">Delivery Partners</h5>
+                <p class="stat-number text-warning">{{ delivery_partners }}</p>
+                <a href="{% url 'manage_delivery_partners' %}" class="btn btn-outline-warning btn-sm">Manage Delivery</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-info">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h5 class="stat-label">Total Orders</h5>
+                <p class="stat-number text-info">{{ total_orders }}</p>
+                <a href="{% url 'manage_orders' %}" class="btn btn-outline-info btn-sm">View All Orders</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pending Verifications Section -->
+<div class="row mb-4">
+    <!-- Pending Restaurants -->
+    <div class="col-md-6">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-clock me-2"></i>Pending Restaurant Verifications
+                    <span class="badge bg-dark ms-2">{{ pending_restaurants.count }}</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if pending_restaurants %}
+                <div class="list-group">
+                    {% for restaurant in pending_restaurants %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">{{ restaurant.username }}</h6>
+                            <small class="text-muted">{{ restaurant.email }}</small>
+                        </div>
+                        <div>
+                            <a href="{% url 'verify_user' restaurant.id %}" class="btn btn-success btn-sm">
+                                <i class="fas fa-check me-1"></i>Verify
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-3">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <p>No pending restaurant verifications</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Delivery Partners -->
+    <div class="col-md-6">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-clock me-2"></i>Pending Delivery Verifications
+                    <span class="badge bg-dark ms-2">{{ pending_delivery.count }}</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if pending_delivery %}
+                <div class="list-group">
+                    {% for delivery in pending_delivery %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">{{ delivery.username }}</h6>
+                            <small class="text-muted">{{ delivery.email }}</small>
+                        </div>
+                        <div>
+                            <a href="{% url 'verify_user' delivery.id %}" class="btn btn-success btn-sm">
+                                <i class="fas fa-check me-1"></i>Verify
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-3">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <p>No pending delivery verifications</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders Overview -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>Orders Overview
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-primary">{{ total_orders }}</h4>
+                            <small class="text-muted">Total Orders</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-warning">{{ pending_orders }}</h4>
+                            <small class="text-muted">Pending Orders</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-info">0</h4>
+                            <small class="text-muted">Processing</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-success">0</h4>
+                            <small class="text-muted">Completed</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-danger">0</h4>
+                            <small class="text-muted">Cancelled</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="border rounded p-3">
+                            <h4 class="text-secondary">₹0</h4>
+                            <small class="text-muted">Revenue</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions mb-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="fas fa-bolt me-2"></i>Quick Actions
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'manage_customers' %}" class="action-btn btn btn-primary">
+                    <i class="fas fa-users me-1"></i>Manage Customers
+                </a>
+                <a href="{% url 'manage_restaurants' %}" class="action-btn btn btn-success">
+                    <i class="fas fa-utensils me-1"></i>Manage Restaurants
+                </a>
+                <a href="{% url 'manage_delivery_partners' %}" class="action-btn btn btn-warning">
+                    <i class="fas fa-motorcycle me-1"></i>Manage Delivery
+                </a>
+               
+                <a href="{% url 'manage_orders' %}" class="action-btn btn btn-secondary">
+                    <i class="fas fa-shopping-bag me-1"></i>Manage Orders
+                </a>
+                <a href="#" class="action-btn btn btn-dark">
+                    <i class="fas fa-cog me-1"></i>System Settings
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="recent-activity">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="fas fa-history me-2"></i>Recent Activity
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-info-circle fa-2x mb-2"></i>
+                <p>Recent activity feed will be displayed here</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

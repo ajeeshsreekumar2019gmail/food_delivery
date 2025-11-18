@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="row align-items-center hero-row">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Delicious Food<br>
+            <span class="highlight">Delivered Fast</span>
+          </h1>
+          <p class="hero-subtitle">
+            Order from your favorite restaurants and get fresh, hot food delivered to your doorstep.
+            Simple, fast, and reliable food delivery service.
+          </p>
+          <div class="hero-actions">
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register_customer' %}" class="btn btn-primary btn-large">
+              Start Ordering
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-outline">
+              Sign In
+            </a>
+            {% else %}
+            <!-- Authenticated: show action buttons -->
+            <a href="{% url 'view_menu' %}" class="btn btn-primary btn-large">Browse Menu</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline">Dashboard</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 text-center order-1 order-lg-2 mb-4 mb-lg-0">
+        <div class="hero-image">
+          <div class="food-blob"></div>
+          <img src="{% static 'images/hero-food.jpg' %}" alt="Food Delivery" class="img-fluid hero-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Why Choose Us</h2>
+      <p>We make food delivery simple and reliable</p>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/fast-delivery.jpg' %}" alt="Fast Delivery" class="feature-img">
+          </div>
+          <h4>Fast Delivery</h4>
+          <p class="text-muted">Get your food delivered in 30 minutes or less</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/fresh-food.jpg' %}" alt="Fresh Food" class="feature-img">
+          </div>
+          <h4>Fresh Food</h4>
+          <p class="text-muted">Only the highest quality ingredients from top restaurants</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/easy-ordering.png' %}" alt="Easy Ordering" class="feature-img">
+          </div>
+          <h4>Easy Ordering</h4>
+          <p class="text-muted">Simple and intuitive platform for seamless ordering</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="process-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>How It Works</h2>
+      <p>Get your food in 4 simple steps</p>
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-3 text-center">
+        <div class="step-card">
+          <div class="step-icon">
+            <img src="{% static 'images/choose-restaurant.png' %}" alt="Choose Restaurant" class="step-img">
+          </div>
+          <div class="step-number">1</div>
+          <h5>Choose Restaurant</h5>
+          <p class="text-muted">Browse and select from various restaurants</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 text-center">
+        <div class="step-card">
+          <div class="step-icon">
+            <img src="{% static 'images/select-food.png' %}" alt="Select Food" class="step-img">
+          </div>
+          <div class="step-number">2</div>
+          <h5>Select Food</h5>
+          <p class="text-muted">Choose your favorite dishes from the menu</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 text-center">
+        <div class="step-card">
+          <div class="step-icon">
+            <img src="{% static 'images/checkout.png' %}" alt="Checkout" class="step-img">
+          </div>
+          <div class="step-number">3</div>
+          <h5>Checkout</h5>
+          <p class="text-muted">Pay securely with multiple payment options</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 text-center">
+        <div class="step-card">
+          <div class="step-icon">
+            <img src="{% static 'images/delivery.png' %}" alt="Delivery" class="step-img">
+          </div>
+          <div class="step-number">4</div>
+          <h5>Enjoy Delivery</h5>
+          <p class="text-muted">Get fresh food delivered to your doorstep</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-6 col-md-3 mb-4 mb-md-0">
+        <h3 class="stat-number">{{ restaurant_count }}+</h3>
+        <p class="stat-label">Restaurants</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 mb-md-0">
+        <h3 class="stat-number">{{ customer_count }}+</h3>
+        <p class="stat-label">Happy Customers</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 mb-md-0">
+        <h3 class="stat-number">{{ delivery_count }}+</h3>
+        <p class="stat-label">Delivery Partners</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 mb-md-0">
+        <h3 class="stat-number">{{ order_count }}+</h3>
+        <p class="stat-label">Orders Delivered</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+{% if not user.is_authenticated %}
+<section class="cta-section">
+  <div class="container text-center">
+    <h2>Ready to get started?</h2>
+    <p>Join our food delivery community today</p>
+    <div class="cta-buttons">
+      <a href="{% url 'register_customer' %}" class="btn btn-primary btn-large">Order Food Now</a>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card community-card">
+          <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Join Our Community</h4>
+          </div>
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-4 mb-3">
+                <h5>👤 Customer</h5>
+                <p>Order food from your favorite restaurants</p>
+                <a href="{% url 'register_customer' %}" class="btn btn-outline-primary">Register as Customer</a>
+              </div>
+              <div class="col-md-4 mb-3">
+                <h5>🏪 Restaurant</h5>
+                <p>List your restaurant and reach more customers</p>
+                <a href="{% url 'register_restaurant' %}" class="btn btn-outline-success">Register as Restaurant</a>
+              </div>
+              <div class="col-md-4 mb-3">
+                <h5>🚚 Delivery Partner</h5>
+                <p>Earn money by delivering food orders</p>
+                <a href="{% url 'register_delivery' %}" class="btn btn-outline-warning">Register as Delivery</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

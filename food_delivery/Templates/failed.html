@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="text-danger">Payment Failed</h2>
+    <p>Something went wrong. Please try again.</p>
+
+    <a href="{% url 'checkout' %}" class="btn btn-warning mt-3">Retry Checkout</a>
+</div>
+{% endblock %}

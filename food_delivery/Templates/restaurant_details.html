@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile.name|default:restaurant.username }} - Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">🏪 {{ profile.name|default:restaurant.username }}</h4>
+            <a href="{% url 'manage_restaurants' %}" class="btn btn-light btn-sm">⬅ Back</a>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-4 text-center">
+                    {% if profile and profile.image %}
+                        <img src="{{ profile.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ profile.name }}" style="max-height: 200px;">
+                    
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th style="width: 30%;">Username</th>
+                                <td>{{ restaurant.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ restaurant.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ profile.phone|default:restaurant.phone_number|default:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Restaurant Name</th>
+                                <td>{{ profile.name|default:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td>{{ profile.address|default:restaurant.address|default:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Joined</th>
+                                <td>{{ restaurant.date_joined|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    {% if restaurant.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactive</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Approval</th>
+                                <td>
+                                    {% if profile and profile.is_approved %}
+                                        <span class="badge bg-success">Approved</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+          
+        </div>
+    </div>
+</div>
+{% endblock %}

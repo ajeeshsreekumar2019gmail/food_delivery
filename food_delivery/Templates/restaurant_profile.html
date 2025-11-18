@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_update %}Update{% else %}Create{% endif %} Restaurant Profile{% endblock %}
+<link href="/static/css/profile.css" rel="stylesheet">
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Back Button -->
+            <div class="mb-3">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                    ← Back to Dashboard
+                </a>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        {% if is_update %}
+                            <i class="fas fa-edit"></i> Update Restaurant Profile
+                        {% else %}
+                            <i class="fas fa-plus"></i> Create Restaurant Profile
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if not is_update %}
+                    <div class="alert alert-info">
+                        <strong>Welcome!</strong> Complete your restaurant profile to start accepting orders.
+                        Your profile will need admin approval before going live.
+                    </div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                {% if is_update %}Update Profile{% else %}Create Profile{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Manage Delivery Partners{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🚴 Manage Delivery Partners</h2>
+    </div>
+
+    <!-- Delivery Partner List -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Delivery Partners List</h5>
+        </div>
+        <div class="card-body">
+            {% if delivery_partners %}
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Date Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for partner in delivery_partners %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ partner.username }}</td>
+                                    <td>{{ partner.email }}</td>
+                                    <td>
+                                        {% if partner.phone_number and partner.phone_number != "0000000000" %}
+                                                         {{ partner.phone_number }}
+                                        {% else %}
+                                                 Not provided
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if partner.is_verified %}
+                                            <span class="badge bg-success">Verified</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ partner.date_joined|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'view_delivery_partner' partner.id %}" 
+                                           class="btn btn-sm btn-outline-primary">👁️ View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-muted mb-0">No delivery partners found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

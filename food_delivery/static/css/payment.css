@@ -1,0 +1,104 @@
+/* ===== PAYMENT PAGE GLOBAL STYLES ===== */
+
+body {
+    background: #f5f7fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== CARD DESIGN ===== */
+
+.payment-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 25px;
+}
+
+.payment-header {
+    background: linear-gradient(45deg, #0d6efd, #0a58ca);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.payment-header h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ===== PAYMENT DETAILS ===== */
+
+.payment-amount {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.divider {
+    border-top: 1px dashed #ccc;
+    margin: 15px 0;
+}
+
+/* ===== BUTTON ===== */
+
+.pay-btn {
+    background: #28a745;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.pay-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+/* ===== SUCCESS & FAILED PAGES ===== */
+
+.success-box, .failed-box {
+    margin-top: 80px;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.success-box {
+    background: #e7f9ee;
+    border-left: 8px solid #28a745;
+}
+
+.failed-box {
+    background: #fdeaea;
+    border-left: 8px solid #dc3545;
+}
+
+.success-box h2, .failed-box h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+    .payment-card {
+        padding: 18px;
+    }
+
+    .pay-btn {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .payment-amount {
+        font-size: 20px;
+    }
+
+    .success-box, .failed-box {
+        padding: 25px;
+    }
+}

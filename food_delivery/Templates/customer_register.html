@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Customer Registration{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="col-md-6">
+        <div class="auth-card">
+            <div class="auth-header bg-primary">
+                <h4 class="mb-0">👤 Customer Registration</h4>
+            </div>
+            <div class="auth-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100 auth-btn">Register as Customer</button>
+                </form>
+                <div class="mt-3 text-center">
+                    <a href="{% url 'login' %}">Already have an account? Login here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
